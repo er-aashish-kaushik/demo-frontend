@@ -1,8 +1,9 @@
 import './index.scss'
 
-const Footer = () => {
+const Footer = (props) => {
+    const { className = "" } = props
     return (
-        <div>Footer</div>
+        <div className={`container ${className}`}>Footer</div>
     )
 }
 

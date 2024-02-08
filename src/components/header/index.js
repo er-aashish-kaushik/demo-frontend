@@ -1,8 +1,9 @@
 import './index.scss'
 
-const Header = () => {
+const Header = (props) => {
+    const { className = "" } = props
     return (
-        <div>Header</div>
+        <div className={`container ${className}`}>Header</div>
     )
 }
 

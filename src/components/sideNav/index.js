@@ -1,8 +1,10 @@
 import './index.scss'
 
-const SideNav = () => {
+const SideNav = (props) => {
+    const { className = "" } = props
+
     return (
-        <div>SideNav</div>
+        <div className={`container ${className}`}>SideNav</div>
     )
 }
 

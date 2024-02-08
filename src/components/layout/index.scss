@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.layoutContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .header,
+    .footer {
+        flex: 0 0 auto;
+        padding: 1rem;
+        color: $white;
+        background-color: $black;
+    }
+
+    .content-wrapper {
+        display: flex;
+        flex-grow: 1;
+    }
+
+    .sidebar {
+        background-color: $white;
+        padding: 20px;
+        flex: 0 0 200px;
+    }
+
+    .content {
+        flex-grow: 1;
+        background-color: $red;
+        padding: 20px;
+    }
+}

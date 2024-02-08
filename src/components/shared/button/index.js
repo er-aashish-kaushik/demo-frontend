@@ -1,8 +1,10 @@
 import './index.scss'
 
-const Button = () => {
+const Button = (props) => {
+    const { className = "" } = props
+
     return (
-        <div>Button</div>
+        <div className={`button ${className}`}>Button</div>
     )
 }
 
