@@ -1,4 +1,4 @@
-import './scss'
+import './index.scss'
 
 const SideNav = () => {
     return (
