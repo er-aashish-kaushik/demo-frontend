@@ -1,10 +1,13 @@
 import './index.scss'
 
-const Button = (props) => {
-    const { className = "" } = props
+const Button = ({
+    className = "",
+    label = "Button",
+    ...rest
+}) => {
 
     return (
-        <div className={`button ${className}`}>Button</div>
+        <button className={`button ${className}`} {...rest}>{label}</button>
     )
 }
 
