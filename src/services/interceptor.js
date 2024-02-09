@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
             if (refreshToken) {
                 try {
                     const response = await axios.post(REFRESH_TOKEN_ENDPOINT, { refreshToken });
-                    const newAccessToken = response.data.accessToken;
+                    const newAccessToken = response.data.data.data.accessToken;
                     setLocalStorage(GENERAL.ACCESS_TOKEN_KEY, newAccessToken);
                     originalRequest.headers.Authorization = `${GENERAL.BEARER_KEY} ${newAccessToken}`;
                     return axios(originalRequest);

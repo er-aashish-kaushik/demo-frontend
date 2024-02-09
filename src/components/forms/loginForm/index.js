@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../../shared/input';
 import Label from '../../shared/label';
 import Button from '../../shared/button';
-import { LOGIN } from '../../../configs/constants';
+import { LOGIN, GENERAL } from '../../../configs/constants';
+import { loginCall } from '../../../services/api'
+import { setLocalStorage } from '../../../utils/localstorage';
+import { AuthContext } from '../../../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const LoginForm = () => {
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
-        console.log('Form data:', data);
+
+    const onSubmit = async (data) => {
+        try {
+            const res = await loginCall(data)
+            setLocalStorage('userData', res.data.data)
+            setLocalStorage(GENERAL.ACCESS_TOKEN_KEY, res?.data?.data?.accessToken)
+            setLocalStorage(GENERAL.REFRESH_TOKEN_KEY, res?.data?.data?.refreshToken)
+            login()
+            navigate('/')
+        } catch (error) {
+            console.log("error----", error)
+        }
     };
 
     return (
