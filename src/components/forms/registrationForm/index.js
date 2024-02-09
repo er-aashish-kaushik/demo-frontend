@@ -4,12 +4,22 @@ import Input from '../../shared/input';
 import Label from '../../shared/label';
 import Button from '../../shared/button';
 import { REGISTER } from '../../../configs/constants'
+import { signupCall } from '../../../services/api'
 
 const RegisterForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
-        console.log('Form data:', data);
+    const onSubmit = async (data) => {
+        try {
+            data.title = "Mr."
+            data.gender = "male"
+            data.phone = "7206591457"
+            delete data.cpassword
+            const res = await signupCall(data)
+            console.log("aashish---res", res)
+        } catch (error) {
+            console.log("error----", error)
+        }
     };
 
     return (

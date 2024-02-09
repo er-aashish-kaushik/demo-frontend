@@ -1,3 +1,9 @@
+export const GENERAL = {
+    ACCESS_TOKEN_KEY: "accessToken",
+    REFRESH_TOKEN_KEY: "refreshToken",
+    BEARER_KEY: "Bearer",
+}
+
 export const REGISTER = {
     TITLE: "Sign Up",
     SUBMIT_BTN: "Register",
