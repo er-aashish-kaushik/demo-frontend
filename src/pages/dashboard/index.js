@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import './index.scss'
 import { getUsersList } from '../../services/api'
+import './index.scss'
 
 const Dashboard = () => {
     useEffect(() => {

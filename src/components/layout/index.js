@@ -1,12 +1,12 @@
 import './index.scss'
-import * as Component from '../index'
 import Footer from '../footer'
-import { SideNav } from "../index"
+import Header from '../header'
+import SideNav from "../sideNav"
 const Layout = (props) => {
     const { className = "" } = props
     return (
         <div className={`layoutContainer ${className}`}>
-            <Component.Header className="header" />
+            <Header className="header" />
             <div className='content-wrapper'>
                 <SideNav className="sidebar" />
                 <div className='content'>
