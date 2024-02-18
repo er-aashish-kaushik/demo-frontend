@@ -1,11 +1,17 @@
 $primary-color: #007bff;
 $secondary-color: #6c757d;
+$pure-white: white;
 $white: #f2f2f2;
 $black: #333;
 $red: #e24f4f;
+$green: #3ed340;
+$lightgrey: lightgrey;
+$grey: grey;
+
+$border-radius: 5px;
+$box-shadow: 0 0 10px 2px $grey;
 
 $font-family: 'Arial', sans-serif;
 $base-spacing: 16px;
-
 $font-family_1: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 $font-family_2: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

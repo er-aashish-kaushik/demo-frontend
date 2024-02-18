@@ -50,3 +50,8 @@ export const LOGIN = {
         MIN_LENGTH: 8,
     },
 }
+
+export const MCQ_SCREEN = {
+    THAKYOU_MSG: "Thankyou! Your ans has submitted",
+    NEXT_QUE: "Next Question"
+}

@@ -6,6 +6,7 @@ import Register from '../pages/register';
 import Dashboard from '../pages/dashboard';
 import Profile from '../pages/profile'
 import UserList from '../pages/userlist'
+import McqScreen from '../pages/keyMouseMCQ'
 
 function RoutesCompnent() {
     return (
@@ -13,6 +14,7 @@ function RoutesCompnent() {
             <Router>
                 <Routes>
                     <Route exact path="/version" element={<div>1.0.0</div>} />
+                    <Route exact path="/McqScreen" element={<McqScreen />} />
                     <Route element={<RestrictedForLoggedUser />}>
                         <Route exact path="/login" element={<Login />} />
                         <Route exact path="/register" element={<Register />} />
