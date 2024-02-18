@@ -1,58 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ProgressBar from '../../components/shared/progress-bar'
 import { data } from './mockData'
 import { decodeURI } from '../../utils/parse'
 import { calCulatePercentage } from '../../utils/maths'
-import { MCQ_SCREEN } from '../../configs/constants'
-import Rating from '../../components/rating'
 import './index.scss'
+import { OuestionInfo } from './OuestionInfo'
+import { OptionInfo } from './OptionInfo'
+import { MsgComponent } from './MsgComponent'
+import { ThankyouScreen } from './ThankyouScreen'
+
+
+const createOption = (question) => {
+    if (!question?.incorrect_answers || !question?.correct_answer) return []
+    const allAnswers = [...question?.incorrect_answers, question?.correct_answer];
+    allAnswers.sort(() => Math.random() - 0.5);
+    return allAnswers
+}
 
 const McqScreen = () => {
     const [currentQueNo, setCurrentQuestionNo] = useState(0)
     const [totalQues, setTotalQuestion] = useState(0)
     const [selectedQues, setSelectedQue] = useState(null)
-    const [options, setOptions] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null)
     const [selectedOption, setSelectedOption] = useState(null)
-    const [progressPecentage, setProgressPrecentage] = useState(0)
 
     useEffect(() => {
         setTotalQuestion(data.length)
         setCurrentQuestionNo(0)
     }, [])
 
-    useEffect(() => {
-        const percentage = calCulatePercentage(currentQueNo, totalQues)
-        setProgressPrecentage(percentage)
+    const progressPecentage = useMemo(() => calCulatePercentage(currentQueNo, totalQues), [currentQueNo, totalQues])
+    const optionsArr = useMemo(() => createOption(data[currentQueNo]), [currentQueNo]);
 
+    useEffect(() => {
         if (currentQueNo < totalQues) {
-            const optionArr = createOption(data[currentQueNo])
             setSelectedQue(data[currentQueNo])
-            setOptions(optionArr)
         }
     }, [currentQueNo, totalQues])
 
-    const handleOptionSeclect = (option) => {
+    const handleOptionSelect = (option) => {
         const isCorrect = option === decodeURI(selectedQues.correct_answer)
         setIsCorrect(isCorrect)
         setSelectedOption(option)
     }
 
-    const createOption = (question) => {
-        const allAnswers = [...question.incorrect_answers, question.correct_answer];
-        allAnswers.sort(() => Math.random() - 0.5);
-        return allAnswers
-    }
-
     const handleNextQue = () => {
         setIsCorrect(null)
         setCurrentQuestionNo(currentQueNo + 1)
-    }
-
-    const convertRating = (str) => {
-        const difficultyRatings = { easy: 1, medium: 3, hard: 5 };
-        const starRating = difficultyRatings[str] || 5;
-        return starRating
     }
 
     return (
@@ -61,35 +55,14 @@ const McqScreen = () => {
             {
                 progressPecentage !== '100.00' ?
                     <div>
-                        <div className="que-info">
-                            <div className="que-no">
-                                Question {currentQueNo + 1} of {totalQues}
-                            </div>
-                            <div className='mcq-category'>
-                                {decodeURI(selectedQues?.category) || "Board Game"}
-                            </div>
-                            <div className='mcq-difficulty'>
-                                <Rating noOfStar={convertRating(selectedQues?.difficulty || "easy")} />
-                            </div>
-                        </div>
-
-                        <div className='mcq-question-container'>
-                            <div className='mcq-question'> {decodeURI(selectedQues?.question)}</div>
-                            <div className='mcq-option-container'>
-                                {options?.map((option, key) =>
-                                    <div
-                                        key={key}
-                                        className={`
-                                            mcq-option-label 
-                                            ${selectedOption === decodeURI(option) ? "active" : ""}
-                                            ${selectedOption === decodeURI(option) && isCorrect && "correct"}
-                                            `}
-                                        onClick={() => handleOptionSeclect(decodeURI(option))}
-                                    >
-                                        {decodeURI(option)}</div>
-                                )}
-                            </div>
-                        </div>
+                        <OuestionInfo selectedQues={selectedQues} currentQueNo={currentQueNo} totalQues={totalQues} />
+                        <OptionInfo
+                            selectedQues={selectedQues}
+                            optionsArr={optionsArr}
+                            handleOptionSelect={handleOptionSelect}
+                            isCorrect={isCorrect}
+                            selectedOption={selectedOption}
+                        />
 
                         {
                             (isCorrect || isCorrect === false) && <div className='isCorrect-msg-container'>
@@ -103,29 +76,9 @@ const McqScreen = () => {
                     :
                     <ThankyouScreen />
             }
-
-
         </div>
     )
 }
 
-const MsgComponent = ({ label, handleNextQue }) => {
-    return (
-        <>
-            <div className='isCorrect-msg'>
-                {label}
-            </div>
-            <div className='next-btn'>
-                <button onClick={handleNextQue}>{MCQ_SCREEN.NEXT_QUE} </button>
-            </div>
-        </>
-    )
-}
-
-const ThankyouScreen = () => {
-    return (
-        <div className='thankyou-screen'> {MCQ_SCREEN.THAKYOU_MSG} </div>
-    )
-}
 
 export default McqScreen

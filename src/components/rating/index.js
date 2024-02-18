@@ -10,7 +10,7 @@ const Rating = ({ noOfStar = 1, maxRating = 5 }) => {
             starArr.push(
                 <span key={i}>
                     {filled ? (
-                        <FontAwesomeIcon icon={faStar} />
+                        <FontAwesomeIcon icon={faStar} color='#ffd700' />
                     ) : (
                         <FontAwesomeIcon icon={faStar} color='grey' />
                     )}
